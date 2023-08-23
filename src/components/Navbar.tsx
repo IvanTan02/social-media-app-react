@@ -33,15 +33,18 @@ export const Navbar = () => {
     <AppBar position="fixed" sx={{ width: '100%' }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Logo display={{ xs: 'none', md: 'flex' }} />
+          {/* TOGGLE NAVBAR */}
           <ToggleMenu />
-
           <Logo display={{ xs: 'flex', md: 'none' }} />
 
+          {/* REGULAR NAVBAR */}
+          <Logo display={{ xs: 'none', md: 'flex' }} />
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             <Link text="Home" link="/" />
-            <Link text="Login" link="/login" />
+            <Link text="Create Post" link="/createpost" />
           </Box>
+
+          {/* USER CARD */}
           {user ? (
             <UserCard />
           ) : (
@@ -58,27 +61,3 @@ export const Navbar = () => {
     </AppBar>
   );
 };
-
-// <div className="Navbar">
-//   <div className="links">
-//     <Link className="link" to="/">
-//       Home
-//     </Link>
-//     {!user ? (
-//       <Link className="link" to="/login">
-//         Login
-//       </Link>
-//     ) : (
-//       <Link className="link" to="/createpost">
-//         Create Post
-//       </Link>
-//     )}
-//   </div>
-//   {user && (
-//     <div className="user-card">
-//       <img src={user?.photoURL || ''} />
-//       <h4>{user?.displayName}</h4>
-//       <button onClick={logout}>Logout</button>
-//     </div>
-//   )}
-// </div>

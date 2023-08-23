@@ -5,6 +5,8 @@ import { addDoc, collection } from 'firebase/firestore';
 import { auth, db } from '../../config/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useNavigate } from 'react-router-dom';
+import { Box, Button, TextField } from '@mui/material';
+import { grey } from '@mui/material/colors';
 
 interface PostData {
   title: string;
@@ -39,13 +41,44 @@ export const CreateForm = () => {
     navigate('/');
   };
 
+  const textFieldSx = {
+    m: 2.5,
+    width: '50%',
+    color: 'white',
+  };
+
   return (
     <form onSubmit={handleSubmit(onCreatePost)}>
-      <input placeholder="Title" {...register('title')} />
-      <p>{errors.title?.message}</p>
-      <textarea placeholder="Description" {...register('description')} />
-      <p>{errors.description?.message}</p>
-      <input type="submit" />
+      <Box>
+        <TextField
+          sx={textFieldSx}
+          id="post-title"
+          label="Title"
+          color="primary"
+          focused
+          helperText={errors.title?.message}
+          {...register('title')}
+          InputProps={{ style: { color: 'white' } }}
+        />
+      </Box>
+      <Box>
+        <TextField
+          sx={textFieldSx}
+          id="post-description"
+          label="Description"
+          helperText={errors.description?.message}
+          multiline
+          rows={4}
+          color="primary"
+          focused
+          {...register('description')}
+          InputProps={{ style: { color: 'white' } }}
+        />
+      </Box>
+
+      <Button type="submit" variant="outlined">
+        Post
+      </Button>
     </form>
   );
 };

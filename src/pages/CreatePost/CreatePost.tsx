@@ -4,7 +4,7 @@ export const CreatePost = () => {
   const styles = { marginTop: '5em' };
   return (
     <div style={styles}>
-      <h1>Create Post</h1>
+      <h1>Add a New Post</h1>
       <CreateForm />
     </div>
   );

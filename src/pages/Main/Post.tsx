@@ -1,8 +1,15 @@
+// REACT
 import { Post as PostInterface } from './Home';
 import { addDoc, getDocs, deleteDoc, collection, query, where, doc } from 'firebase/firestore';
 import { auth, db } from '../../config/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useEffect, useState } from 'react';
+
+// MATERIAL UI
+import { Card, CardContent, Typography, CardActions, Button, Box, alpha } from '@mui/material';
+import { grey } from '@mui/material/colors';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 
 interface Props {
   post: PostInterface;
@@ -66,20 +73,44 @@ export const Post = (props: Props) => {
   }, []);
 
   return (
-    <div>
-      <div className="post-header">
-        <h2>{post.title}</h2>
-        <button onClick={hasUserLiked ? removeLike : addLike}>
-          {hasUserLiked ? <>&#128078;</> : <>&#128077;</>}
-        </button>
-      </div>
-      <div className="post-body">
-        <p>{post.description}</p>
-        {likes && <p>Likes: {likes.length}</p>}
-      </div>
-      <div className="post-author">
-        <p>@{post.username}</p>
-      </div>
-    </div>
+    <Card sx={{ backgroundColor: grey[800], m: 2 }}>
+      <CardContent sx={{ ml: 2 }}>
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+          }}
+        >
+          <Typography sx={{ fontSize: 30, color: grey['A100'], textAlign: 'start' }}>
+            {post.title}
+          </Typography>
+          <Typography
+            sx={{ color: alpha(grey['A100'], 0.5), ml: 1, fontSize: 20, fontWeight: 200 }}
+          >
+            @{post.username}
+          </Typography>
+        </Box>
+        <Typography
+          sx={{ color: grey['A100'], textAlign: 'start', fontSize: 18, fontWeight: 300, mt: 1 }}
+          variant="h5"
+          component="div"
+        >
+          {post.description}
+        </Typography>
+      </CardContent>
+      <CardActions>
+        <Button onClick={addLike} disabled={hasUserLiked ? true : false}>
+          <ThumbUpIcon />
+        </Button>
+        <Typography sx={{ color: grey['A100'], mr: -1 }}>
+          {likes && <p>Likes: {likes.length}</p>}
+        </Typography>
+        <Button onClick={removeLike} disabled={hasUserLiked ? false : true}>
+          <ThumbDownIcon />
+        </Button>
+      </CardActions>
+    </Card>
   );
 };
+
+// {hasUserLiked ? <>&#128078;</> : <>&#128077;</>}
